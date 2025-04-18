@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: io.chandler:protobuf-java:3.7.1-teavm1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.m2/repository/io/chandler/protobuf-java/3.7.1-teavm1/protobuf-java-3.7.1-teavm1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.m2/repository/io/chandler/protobuf-java/3.7.1-teavm1/protobuf-java-3.7.1-teavm1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.m2/repository/io/chandler/protobuf-java/3.7.1-teavm1/protobuf-java-3.7.1-teavm1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
