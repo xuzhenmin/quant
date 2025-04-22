@@ -7,6 +7,11 @@ import java.util.stream.Collectors;
 
 import com.futu.openapi.scraper.StockPricePredictor;
 import com.futu.openapi.scraper.model.PredictionResult;
+import com.futu.openapi.trade.run.WatchGoodStocks;
+import com.futu.openapi.trade.run.analysis.CyclicalAnalysis;
+import com.futu.openapi.trade.run.util.sink.Sink2Ding;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +22,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class StockPredictionController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(StockPredictionController.class);
+
     @Autowired
     private StockPricePredictor stockPricePredictor;
 
@@ -25,24 +32,35 @@ public class StockPredictionController {
         return "stock/prediction";
     }
 
+    @GetMapping("/watch")
+    public String watch() {
+        LOGGER.info("watch good stocks ！！！！");
+
+        //任务执行
+        WatchGoodStocks.run();
+        CyclicalAnalysis.analysisPeak();
+        Sink2Ding.sendMsg();
+        return "watching";
+    }
+
     @PostMapping("/stock/prediction/data")
     @ResponseBody
     public Map<String, Object> getPredictionData(@RequestParam String stockCode) {
         List<PredictionResult> results = stockPricePredictor.predictStockPrice(stockCode);
-        
+
         // 准备图表数据
         List<String> dates = results.stream()
             .map(PredictionResult::getDate)
             .collect(Collectors.toList());
-        
+
         List<Double> prices = results.stream()
             .map(PredictionResult::getPrice)
             .collect(Collectors.toList());
-        
+
         List<Double> ema5 = results.stream()
             .map(PredictionResult::getEma5)
             .collect(Collectors.toList());
-        
+
         List<Double> ema10 = results.stream()
             .map(PredictionResult::getEma10)
             .collect(Collectors.toList());
@@ -51,11 +69,11 @@ public class StockPredictionController {
         List<String> explanations = results.stream()
             .map(PredictionResult::getExplanation)
             .collect(Collectors.toList());
-        
+
         List<Boolean> isHistorical = results.stream()
             .map(PredictionResult::isHistorical)
             .collect(Collectors.toList());
-        
+
         // 添加涨跌幅数据
         List<Double> changePercents = results.stream()
             .map(PredictionResult::getChangePercent)
@@ -70,7 +88,7 @@ public class StockPredictionController {
         response.put("explanations", explanations);
         response.put("isHistorical", isHistorical);
         response.put("changePercents", changePercents);
-        
+
         return response;
     }
 } 
