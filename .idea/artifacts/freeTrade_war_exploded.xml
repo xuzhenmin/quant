@@ -63,7 +63,7 @@
           <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.36" />
           <element id="library" level="project" name="Maven: ch.qos.logback:logback-classic:1.2.11" />
           <element id="library" level="project" name="Maven: ch.qos.logback:logback-core:1.2.11" />
-          <element id="library" level="project" name="Maven: com.futu.openapi:futu-api:6.0.2507" />
+          <element id="library" level="project" name="Maven: com.futu.openapi:futu-api:9.2.5208" />
           <element id="library" level="project" name="Maven: org.bouncycastle.bcprov-jdk15on.1.57.org.bouncycastle:bcprov-jdk15on:1.57" />
           <element id="library" level="project" name="Maven: org.bouncycastle.bcpkix-jdk15on.1.57.org.bouncycastle:bcpkix-jdk15on:1.57" />
           <element id="library" level="project" name="Maven: io.chandler:protobuf-java:3.7.1-teavm1" />

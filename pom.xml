@@ -267,17 +267,17 @@
         <dependency>
             <groupId>com.futu.openapi</groupId>
             <artifactId>futu-api</artifactId>
-            <version>6.0.2507</version>
+            <version>9.2.5208</version>
         </dependency>
         <dependency>
-            <groupId>org.bouncycastle.bcprov-jdk15on.1.57.org.bouncycastle</groupId>
+            <groupId>org.bouncycastle.bcprov-jdk15on.1.68.org.bouncycastle</groupId>
             <artifactId>bcprov-jdk15on</artifactId>
-            <version>1.57</version>
+            <version>1.68</version>
         </dependency>
         <dependency>
-            <groupId>org.bouncycastle.bcpkix-jdk15on.1.57.org.bouncycastle</groupId>
+            <groupId>org.bouncycastle.bcpkix-jdk15on.1.68.org.bouncycastle</groupId>
             <artifactId>bcpkix-jdk15on</artifactId>
-            <version>1.57</version>
+            <version>1.68</version>
         </dependency>
         <dependency>
             <groupId>io.chandler</groupId>
