@@ -9,7 +9,7 @@ import com.futu.openapi.scraper.StockPricePredictor;
 import com.futu.openapi.scraper.model.PredictionResult;
 import com.futu.openapi.trade.run.WatchGoodStocks;
 import com.futu.openapi.trade.run.analysis.CyclicalAnalysis;
-import com.futu.openapi.trade.run.util.sink.Sink2Ding;
+import com.futu.openapi.trade.run.util.sink.Sink2DingDing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,16 +33,17 @@ public class StockPredictionController {
     }
 
     @GetMapping("/watch")
+    @ResponseBody
     public String watch() {
         LOGGER.info("watch good stocks ！！！！");
 
         //任务执行
         WatchGoodStocks.run();
         CyclicalAnalysis.analysisPeak();
-        Sink2Ding.sendMsg();
+        //Sink2Ding.sendMsg();
+        Sink2DingDing.sendMarkdownMessage("invest day!");
         return "watching";
     }
-
     @PostMapping("/stock/prediction/data")
     @ResponseBody
     public Map<String, Object> getPredictionData(@RequestParam String stockCode) {

@@ -4,10 +4,13 @@
  */
 package com.futu.openapi.trade.run.util.data;
 
+import java.text.SimpleDateFormat;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Date;
+
 
 import com.alibaba.fastjson.JSON;
 
@@ -46,6 +49,9 @@ public class DataUtil {
 
     private static final Map<String, KlineData> kLineMap = Maps.newConcurrentMap();
 
+
+        private static String CUTOFF = "";
+
     /**
      * 读取K线数据
      *
@@ -81,8 +87,9 @@ public class DataUtil {
 
     private static void initKline(CodeInfo[] codeInfos) {
 
-        if (kLineMap.isEmpty()) {
-            Map<CodeInfo, List<KLine>> listMap = DataUtil.loadKline();
+        if (!new SimpleDateFormat("yyyyMMdd").format(new Date()).equalsIgnoreCase(CUTOFF) || kLineMap.isEmpty()) {
+            CUTOFF = new SimpleDateFormat("yyyyMMdd").format(new Date());
+	    Map<CodeInfo, List<KLine>> listMap = DataUtil.loadKline();
             if (listMap.size() < 1) {
                 for (int i = 0; i < codeInfos.length; i++) {
                     try {

@@ -1,12 +1,12 @@
 com/futu/openapi/web/WebTest.class
-com/futu/openapi/trade/DataUtilTest.class
 com/futu/openapi/trade/MsgTest.class
+com/futu/openapi/trade/DataUtilTest.class
 com/futu/openapi/trade/TradeRunTest.class
 com/futu/openapi/trade/NormalizationTest.class
 com/futu/openapi/trade/MAStocksTest.class
 com/futu/openapi/trade/AppTest.class
 com/futu/openapi/trade/CapitalTest.class
+com/futu/openapi/trade/Sink2DingTest.class
+com/futu/openapi/trade/CyclicalAnalysisTest.class
 com/futu/openapi/trade/SecurityKlineTest.class
 com/futu/openapi/trade/OssClientTest.class
-com/futu/openapi/trade/CyclicalAnalysisTest.class
-com/futu/openapi/trade/Sink2DingTest.class
