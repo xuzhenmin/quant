@@ -76,7 +76,7 @@ public class WatchGoodStocks {
         IOUtil.write(SELECT_STOCK_FILE, sts, false);
     }
 
-    private static final List<String> GROUP_WHITELIST = Lists.newArrayList("量化", "韭菜", "埋伏", "生肖", "提前埋伏", "猥琐发育别浪");
+    private static final List<String> GROUP_WHITELIST = Lists.newArrayList("量化", "埋伏", "生肖", "提前埋伏", "猥琐发育别浪");
 
     private static final List<String> GROUP_BLACKLIST = Lists.newArrayList("加拿大", "澳洲", "港股期权", "期权", "美股期权", "债券",
         "全部",
