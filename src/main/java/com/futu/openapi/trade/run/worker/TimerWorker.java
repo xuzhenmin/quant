@@ -35,7 +35,7 @@ public class TimerWorker {
 
     private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
-    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     static {
         PropUtil.readProp();
@@ -58,7 +58,7 @@ public class TimerWorker {
                     securityKline.createCon();
                     List<KLine> kLines = securityKline.queryKline(Security.newBuilder().setCode(code)
                         .setMarket(QotMarket.QotMarket_CNSZ_Security_VALUE).build(), 30, 1000);
-                    if (DateUtil.isSameDay(kLines.get(0).getTime(), sdf.format(new Date()))) {
+                    if (DateUtil.isSameDay(kLines.get(kLines.size() - 1).getTime(), sdf.format(new Date()))) {
                         LOGGER.info("今天是交易日！！！！");
 
                         //任务执行
