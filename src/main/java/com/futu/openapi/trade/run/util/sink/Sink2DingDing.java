@@ -160,15 +160,6 @@ public class Sink2DingDing {
         }
     }
 
-    //统计
-    private static final String ANALYSIS_STATISTIC_FILE_NAME = Constants.ANALYSIS_STATISTIC_FILE_NAME;
-
-    //趋势股票每日统计
-    private static final String MARKET_PEAK_TREND_FILE_NAME = Constants.MARKET_PEAK_TREND_FILE_NAME;
-
-    //周一市场抽样涨跌趋势
-    public static final String MARKET_TREND_FILE_NAME = Constants.MARKET_TREND_FILE_NAME;
-
     private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 
     public static String buildMsgContent() {
@@ -177,14 +168,16 @@ public class Sink2DingDing {
         buffer.append("日期:").append(sdf.format(new Date())).append("<br>");
 
         buffer.append("今日重点关注股票:");
-        String downloadUrl = OssClient.newInstance().generateUrl(ANALYSIS_STATISTIC_FILE_NAME);
+        String downloadUrl = OssClient.newInstance().generateUrl(Constants.getAnalysisStatisticFileName());
         buffer.append("[详细列表](").append(downloadUrl).append(")").append("<br>");
         buffer.append("近期重点关注股票趋势:<br>");
-        buffer.append("![screenshot](").append(OssClient.newInstance().generateUrl(MARKET_PEAK_TREND_FILE_NAME)).append(
+        buffer.append("![screenshot](").append(
+            OssClient.newInstance().generateUrl(Constants.getMarketPeakTrendFileName())).append(
             ")");
         buffer.append("近期周一涨跌趋势:<br>");
 
-        buffer.append("![screenshot](").append(OssClient.newInstance().generateUrl(MARKET_TREND_FILE_NAME)).append(")");
+        buffer.append("![screenshot](").append(OssClient.newInstance().generateUrl(Constants.getMarketTrendFileName()))
+            .append(")");
         return buffer.toString();
     }
 }
