@@ -37,8 +37,6 @@ public class MAStocks {
         PropUtil.readProp();
     }
 
-    private static final String SELECT_STOCK_FILE = Constants.SELECT_STOCK_FILE;
-
     public static void main(String[] args) {
 
         run();
