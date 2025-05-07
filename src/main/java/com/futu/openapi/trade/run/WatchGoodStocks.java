@@ -39,8 +39,6 @@ public class WatchGoodStocks {
         PropUtil.readProp();
     }
 
-    private static final String SELECT_STOCK_FILE = Constants.SELECT_STOCK_FILE;
-
     public static void run() {
         System.out.println("Watch start //");
 
@@ -73,10 +71,10 @@ public class WatchGoodStocks {
                 .append(",price:").append(sp.getPrice()));
             sts.add(st.toString());
         });
-        IOUtil.write(SELECT_STOCK_FILE, sts, false);
+        IOUtil.write(Constants.getSelectStockFile(), sts, false);
     }
 
-    private static final List<String> GROUP_WHITELIST = Lists.newArrayList("量化", "埋伏", "生肖", "提前埋伏", "猥琐发育别浪");
+    private static final List<String> GROUP_WHITELIST = Lists.newArrayList("量化", "韭菜", "埋伏", "生肖", "提前埋伏", "猥琐发育别浪");
 
     private static final List<String> GROUP_BLACKLIST = Lists.newArrayList("加拿大", "澳洲", "港股期权", "期权", "美股期权", "债券",
         "全部",
