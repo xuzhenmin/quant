@@ -4,13 +4,12 @@
  */
 package com.futu.openapi.trade.run.util.data;
 
-import java.text.SimpleDateFormat;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.Date;
-
 
 import com.alibaba.fastjson.JSON;
 
@@ -37,24 +36,16 @@ import org.springframework.util.CollectionUtils;
  * @version $Id: DataUtil.java, v 0.1 2024-04-09 11:27 xuxu Exp $$
  */
 public class DataUtil {
-	private static final Logger LOGGER = LoggerFactory.getLogger(DataUtil.class);
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(DataUtil.class);
 
-    private static final String KLINE_FILE = Constants.KLINE_FILE;
-
-    private static final String CAPITAL_FILE = Constants.CAPITAL_FILE;
-
-    private static final String ANALYSIS_FILE = Constants.ANALYSIS_FILE;
-
-    private static final String ANALYSIS_STATISTIC_FILE = Constants.ANALYSIS_STATISTIC_FILE;
 
     private static final String PREFIX_SPE = "@";
     private static final String PREFIX_START = "$";
 
     private static final Map<String, KlineData> kLineMap = Maps.newConcurrentMap();
 
-
-        private static String CUTOFF = "";
+    private static String CUTOFF = "";
 
     /**
      * 读取K线数据
@@ -91,11 +82,11 @@ public class DataUtil {
 
     private static void initKline(CodeInfo[] codeInfos) {
 
-      LOGGER.info("date:{},CUTOFF:{}",new SimpleDateFormat("yyyyMMdd").format(new Date()),CUTOFF);
+        LOGGER.info("date:{},CUTOFF:{}",new SimpleDateFormat("yyyyMMdd").format(new Date()),CUTOFF);
 
         if (!new SimpleDateFormat("yyyyMMdd").format(new Date()).equalsIgnoreCase(CUTOFF) || kLineMap.isEmpty()) {
-           
-	    Map<CodeInfo, List<KLine>> listMap = DataUtil.loadKline();
+
+            Map<CodeInfo, List<KLine>> listMap = DataUtil.loadKline();
             if (listMap.size() < 1) {
                 for (int i = 0; i < codeInfos.length; i++) {
                     try {
@@ -115,7 +106,7 @@ public class DataUtil {
             listMap.forEach((codeInfo, kLines) -> {
                 kLineMap.put(codeInfo.getCode(), KlineData.builder().codeInfo(codeInfo).data(kLines).build());
             });
-	 CUTOFF = new SimpleDateFormat("yyyyMMdd").format(new Date());
+            CUTOFF = new SimpleDateFormat("yyyyMMdd").format(new Date());
         }
     }
 
@@ -170,7 +161,7 @@ public class DataUtil {
     public static Map<CodeInfo, List<KLine>> loadKline() {
 
         Map<CodeInfo, List<KLine>> listMap = Maps.newConcurrentMap();
-        List<String> dataList = IOUtil.read(KLINE_FILE);
+        List<String> dataList = IOUtil.read(Constants.getKlineFile());
 
         List<KLine> kLineList = Lists.newArrayList();
 
@@ -242,9 +233,9 @@ public class DataUtil {
                 strings.add(JsonFormat.printer().print(kLine));
             } catch (Exception e) {e.printStackTrace();}
         });
-        IOUtil.write(KLINE_FILE, Lists.newArrayList(PREFIX_START + JSON.toJSONString(codeInfo)));
-        IOUtil.write(KLINE_FILE, strings);
-        IOUtil.write(KLINE_FILE, Lists.newArrayList(PREFIX_SPE));
+        IOUtil.write(Constants.getKlineFile(), Lists.newArrayList(PREFIX_START + JSON.toJSONString(codeInfo)));
+        IOUtil.write(Constants.getKlineFile(), strings);
+        IOUtil.write(Constants.getKlineFile(), Lists.newArrayList(PREFIX_SPE));
 
     }
 
@@ -256,13 +247,13 @@ public class DataUtil {
             strings.add("code:" + codeInfo.getCode() + ",name:" + codeInfo.getName() + ",analyzes:" + JSON
                 .toJSONString(analyzes));
         });
-        IOUtil.write(ANALYSIS_FILE, strings, false);
+        IOUtil.write(Constants.getAnalysisFile(), strings, false);
 
     }
 
     public static void writeAnalysisStatistic(List<String> results) {
 
-        IOUtil.write(ANALYSIS_STATISTIC_FILE, results, false, false);
+        IOUtil.write(Constants.getAnalysisStatisticFile(), results, false, false);
 
     }
 
@@ -273,9 +264,9 @@ public class DataUtil {
                 strings.add(JsonFormat.printer().print(flowItem));
             } catch (Exception e) {e.printStackTrace();}
         });
-        IOUtil.write(CAPITAL_FILE, Lists.newArrayList(PREFIX_START + JSON.toJSONString(codeInfo)));
-        IOUtil.write(CAPITAL_FILE, strings);
-        IOUtil.write(CAPITAL_FILE, Lists.newArrayList(PREFIX_SPE));
+        IOUtil.write(Constants.getCapitalFile(), Lists.newArrayList(PREFIX_START + JSON.toJSONString(codeInfo)));
+        IOUtil.write(Constants.getCapitalFile(), strings);
+        IOUtil.write(Constants.getCapitalFile(), Lists.newArrayList(PREFIX_SPE));
 
     }
 
