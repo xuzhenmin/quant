@@ -24,7 +24,7 @@ public class DataUtilTest {
     @Test
     public void testLoadPeak() throws Exception {
 
-        DataUtil.loadPeak(Constants.SELECT_STOCK_FILE);
+        DataUtil.loadPeak(Constants.getSelectStockFile());
 
     }
 
