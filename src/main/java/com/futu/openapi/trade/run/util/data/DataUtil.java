@@ -28,6 +28,8 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.protobuf.util.JsonFormat;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
 
 /**
@@ -87,8 +89,10 @@ public class DataUtil {
 
     private static void initKline(CodeInfo[] codeInfos) {
 
+      LOGGER.info("date:{},CUTOFF:{}",new SimpleDateFormat("yyyyMMdd").format(new Date()),CUTOFF);
+
         if (!new SimpleDateFormat("yyyyMMdd").format(new Date()).equalsIgnoreCase(CUTOFF) || kLineMap.isEmpty()) {
-            CUTOFF = new SimpleDateFormat("yyyyMMdd").format(new Date());
+           
 	    Map<CodeInfo, List<KLine>> listMap = DataUtil.loadKline();
             if (listMap.size() < 1) {
                 for (int i = 0; i < codeInfos.length; i++) {
@@ -109,7 +113,7 @@ public class DataUtil {
             listMap.forEach((codeInfo, kLines) -> {
                 kLineMap.put(codeInfo.getCode(), KlineData.builder().codeInfo(codeInfo).data(kLines).build());
             });
-
+	 CUTOFF = new SimpleDateFormat("yyyyMMdd").format(new Date());
         }
     }
 
