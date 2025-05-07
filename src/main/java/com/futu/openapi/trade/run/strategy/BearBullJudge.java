@@ -33,14 +33,6 @@ import com.google.common.collect.Maps;
  */
 public class BearBullJudge {
 
-    private static final String BULL_JUDGE_FILE = Constants.BULL_JUDGE_FILE;
-
-    //市场趋势图
-    private static final String MARKET_TREND_FILE = Constants.MARKET_TREND_FILE;
-
-    //文件名称
-    private static final String MARKET_TREND_FILE_NAME = Constants.MARKET_TREND_FILE_NAME;
-
     public static boolean judge(Map<CodeInfo, List<KLine>> kLineMap) {
 
         Map<CodeInfo, List<Double>> changeRates = Maps.newConcurrentMap();
@@ -73,8 +65,8 @@ public class BearBullJudge {
                     + ",riseRate:" + riseRate(doubles, 0d));
             riseRateList.add(riseRate(doubles, 0d));
         });
-        IOUtil.write(BULL_JUDGE_FILE, stringList);
-        IOUtil.write(BULL_JUDGE_FILE, Lists.newArrayList("整体胜率:" + riseRate(riseRateList, 0.5d)), true);
+        IOUtil.write(Constants.getBullJudgeFile(), stringList);
+        IOUtil.write(Constants.getBullJudgeFile(), Lists.newArrayList("整体胜率:" + riseRate(riseRateList, 0.5d)), true);
 
         //监控绘图
         riseMonitor(times, changeRates);
@@ -109,11 +101,11 @@ public class BearBullJudge {
         //GraphUtil.drawLine("Bull&Bear", "MonDayRiseRate", "time", "rate", times,
         //    riseRateList);
 
-        GraphUtil.createNewLineChartForPng("Market Trend", "MondayRiseRate", "time", "rate", MARKET_TREND_FILE, times,
+        GraphUtil.createNewLineChartForPng("Market Trend", "MondayRiseRate", "time", "rate", Constants.getMarketTrendFile(), times,
             riseRateList, 1024, 768);
 
         //upload oss
-        OssClient.newInstance().loadData(MARKET_TREND_FILE, MARKET_TREND_FILE_NAME);
+        OssClient.newInstance().loadData(Constants.getMarketTrendFile(), Constants.getMarketTrendFileName());
 
     }
 
