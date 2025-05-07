@@ -49,9 +49,13 @@ public class Constants {
     }
 
     //文件名称
-    public static final String MARKET_TREND_FILE_NAME = "market-trend-"
-        + new SimpleDateFormat("yyyyMMdd").format(new Date())
-        + ".png";
+
+    public static String getMarketTrendFileName() {
+
+        return "market-trend-"
+            + new SimpleDateFormat("yyyyMMdd").format(new Date())
+            + ".png";
+    }
 
     public static String getKlineFile() {
 
