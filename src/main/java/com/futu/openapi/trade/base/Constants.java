@@ -15,25 +15,38 @@ import com.futu.openapi.trade.run.util.PropUtil;
  */
 public class Constants {
 
-    public static final String BULL_JUDGE_FILE = "./data/" + new SimpleDateFormat("yyyyMMdd").format(new Date())
-        + "/bull-judge-"
-        + new SimpleDateFormat("yyyyMMdd").format(new Date())
-        + ".txt";
+    public static String getBullJudgeFile() {
+
+        return "./data/" + new SimpleDateFormat("yyyyMMdd").format(new Date())
+            + "/bull-judge-"
+            + new SimpleDateFormat("yyyyMMdd").format(new Date())
+            + ".txt";
+    }
 
     //市场趋势图
-    public static final String MARKET_TREND_FILE = "./data/" + new SimpleDateFormat("yyyyMMdd").format(new Date())
-        + "/market-trend-"
-        + new SimpleDateFormat("yyyyMMdd").format(new Date())
-        + ".png";
+    public static String getMarketTrendFile() {
 
-    public static final String MARKET_PEAK_TREND_FILE = "./data/" + new SimpleDateFormat("yyyyMMdd").format(new Date())
-        + "/market-peak-trend-"
-        + new SimpleDateFormat("yyyyMMdd").format(new Date())
-        + ".png";
+        return "./data/" + new SimpleDateFormat("yyyyMMdd").format(new Date())
+            + "/market-trend-"
+            + new SimpleDateFormat("yyyyMMdd").format(new Date())
+            + ".png";
+    }
 
-    public static final String MARKET_PEAK_TREND_FILE_NAME = "market-peak-trend-"
-        + new SimpleDateFormat("yyyyMMdd").format(new Date())
-        + ".png";
+
+    public static String getMarketPeakTrendFile() {
+
+        return "./data/" + new SimpleDateFormat("yyyyMMdd").format(new Date())
+            + "/market-peak-trend-"
+            + new SimpleDateFormat("yyyyMMdd").format(new Date())
+            + ".png";
+    }
+
+    public static String getMarketPeakTrendFileName() {
+
+        return "market-peak-trend-"
+            + new SimpleDateFormat("yyyyMMdd").format(new Date())
+            + ".png";
+    }
 
     //文件名称
     public static final String MARKET_TREND_FILE_NAME = "market-trend-"
@@ -63,24 +76,28 @@ public class Constants {
             + ".txt";
     }
 
-
     public static String getAnalysisStatisticFile() {
 
-        return"./data/" + new SimpleDateFormat("yyyyMMdd").format(new Date())
+        return "./data/" + new SimpleDateFormat("yyyyMMdd").format(new Date())
             + "/analysis-statistic-"
             + new SimpleDateFormat("yyyyMMdd").format(new Date())
             + ".txt";
     }
 
+    public static String getAnalysisStatisticFileName() {
 
-    public static final String ANALYSIS_STATISTIC_FILE_NAME = "analysis-statistic-"
-        + new SimpleDateFormat("yyyyMMdd").format(new Date())
-        + ".txt";
+        return "analysis-statistic-"
+            + new SimpleDateFormat("yyyyMMdd").format(new Date())
+            + ".txt";
+    }
 
-    public static final String SELECT_STOCK_FILE = "./data/" + new SimpleDateFormat("yyyyMMdd").format(new Date())
-        + "/peak-" + PropUtil.getProp("step") + "-"
-        + new SimpleDateFormat("yyyyMMdd").format(new Date())
-        + ".txt";
+    public static String getSelectStockFile() {
+
+        return "./data/" + new SimpleDateFormat("yyyyMMdd").format(new Date())
+            + "/peak-" + PropUtil.getProp("step") + "-"
+            + new SimpleDateFormat("yyyyMMdd").format(new Date())
+            + ".txt";
+    }
 
     public static String buildPeakFile(String date) {
         return "./data/" + date
