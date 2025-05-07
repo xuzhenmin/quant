@@ -29,15 +29,6 @@ import com.google.common.collect.Maps;
  */
 public class CyclicalAnalysis {
 
-    private static final String MARKET_PEAK_TREND_FILE = Constants.MARKET_PEAK_TREND_FILE;
-
-    private static final String MARKET_PEAK_TREND_FILE_NAME = Constants.MARKET_PEAK_TREND_FILE_NAME;
-
-    private static final String ANALYSIS_STATISTIC_FILE = Constants.ANALYSIS_STATISTIC_FILE;
-
-    private static final String ANALYSIS_STATISTIC_FILE_NAME = Constants.ANALYSIS_STATISTIC_FILE_NAME;
-
-
 
     public static Map<CodeInfo, List<Analyze>> analysisPeak() {
 
@@ -78,7 +69,7 @@ public class CyclicalAnalysis {
         DataUtil.writeAnalysisStatistic(analysisStatisticResult);
 
         //upload oss
-        OssClient.newInstance().loadData(ANALYSIS_STATISTIC_FILE, ANALYSIS_STATISTIC_FILE_NAME);
+        OssClient.newInstance().loadData(Constants.getAnalysisStatisticFile(), Constants.getAnalysisStatisticFileName());
 
         return infoListMap;
     }
@@ -124,13 +115,13 @@ public class CyclicalAnalysis {
         }
         Collections.reverse(dates);
         Collections.reverse(peakCount);
-        GraphUtil.createNewLineChartForPng("Market Peak Trend", "Peak Trend", "date", "count", MARKET_PEAK_TREND_FILE,
+        GraphUtil.createNewLineChartForPng("Market Peak Trend", "Peak Trend", "date", "count", Constants.getMarketPeakTrendFile(),
             dates,
             peakCount, 1024, 768);
 
 
         //upload oss
-        OssClient.newInstance().loadData(MARKET_PEAK_TREND_FILE, MARKET_PEAK_TREND_FILE_NAME);
+        OssClient.newInstance().loadData(Constants.getMarketPeakTrendFile(), Constants.getMarketPeakTrendFileName());
 
         return assemblyResult;
 
