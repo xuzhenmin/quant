@@ -37,6 +37,8 @@ import org.springframework.util.CollectionUtils;
  * @version $Id: DataUtil.java, v 0.1 2024-04-09 11:27 xuxu Exp $$
  */
 public class DataUtil {
+	private static final Logger LOGGER = LoggerFactory.getLogger(DataUtil.class);
+
 
     private static final String KLINE_FILE = Constants.KLINE_FILE;
 
