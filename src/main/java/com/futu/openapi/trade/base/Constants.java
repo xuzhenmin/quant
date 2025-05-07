@@ -40,24 +40,38 @@ public class Constants {
         + new SimpleDateFormat("yyyyMMdd").format(new Date())
         + ".png";
 
-    public static final String KLINE_FILE = "./data/" + new SimpleDateFormat("yyyyMMdd").format(new Date()) + "/kline-"
-        + new SimpleDateFormat("yyyyMMdd").format(new Date())
-        + ".txt";
+    public static String getKlineFile() {
 
-    public static final String CAPITAL_FILE = "./data/" + new SimpleDateFormat("yyyyMMdd").format(new Date())
-        + "/capital-"
-        + new SimpleDateFormat("yyyyMMdd").format(new Date())
-        + ".txt";
+        return "./data/" + new SimpleDateFormat("yyyyMMdd").format(new Date()) + "/kline-"
+            + new SimpleDateFormat("yyyyMMdd").format(new Date())
+            + ".txt";
+    }
 
-    public static final String ANALYSIS_FILE = "./data/" + new SimpleDateFormat("yyyyMMdd").format(new Date())
-        + "/analysis-"
-        + new SimpleDateFormat("yyyyMMdd").format(new Date())
-        + ".txt";
+    public static String getCapitalFile() {
 
-    public static final String ANALYSIS_STATISTIC_FILE = "./data/" + new SimpleDateFormat("yyyyMMdd").format(new Date())
-        + "/analysis-statistic-"
-        + new SimpleDateFormat("yyyyMMdd").format(new Date())
-        + ".txt";
+        return "./data/" + new SimpleDateFormat("yyyyMMdd").format(new Date())
+            + "/capital-"
+            + new SimpleDateFormat("yyyyMMdd").format(new Date())
+            + ".txt";
+    }
+
+    public static String getAnalysisFile() {
+
+        return "./data/" + new SimpleDateFormat("yyyyMMdd").format(new Date())
+            + "/analysis-"
+            + new SimpleDateFormat("yyyyMMdd").format(new Date())
+            + ".txt";
+    }
+
+
+    public static String getAnalysisStatisticFile() {
+
+        return"./data/" + new SimpleDateFormat("yyyyMMdd").format(new Date())
+            + "/analysis-statistic-"
+            + new SimpleDateFormat("yyyyMMdd").format(new Date())
+            + ".txt";
+    }
+
 
     public static final String ANALYSIS_STATISTIC_FILE_NAME = "analysis-statistic-"
         + new SimpleDateFormat("yyyyMMdd").format(new Date())
