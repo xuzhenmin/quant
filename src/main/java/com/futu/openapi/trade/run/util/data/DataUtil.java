@@ -39,11 +39,10 @@ public class DataUtil {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DataUtil.class);
 
-
     private static final String PREFIX_SPE = "@";
     private static final String PREFIX_START = "$";
 
-    private static final Map<String, KlineData> kLineMap = Maps.newConcurrentMap();
+    //private static final Map<String, KlineData> kLineMap = Maps.newConcurrentMap();
 
     private static String CUTOFF = "";
 
@@ -55,10 +54,12 @@ public class DataUtil {
      */
     public static Map<CodeInfo, List<KLine>> loadKLineData(CodeInfo... codeInfos) {
 
-        initKline(codeInfos);
+        Map<String, KlineData> kLineMap = initKline(codeInfos);
 
         //已有数据
         Map<CodeInfo, List<KLine>> readyMap = Maps.newConcurrentMap();
+
+        Map<String, KlineData> unReadyKLineMap = Maps.newConcurrentMap();
 
         Set<CodeInfo> unReadyCodes = Sets.newConcurrentHashSet();
 
@@ -66,10 +67,10 @@ public class DataUtil {
             if (kLineMap.get(codeInfo.getCode()) == null || CollectionUtils.isEmpty(
                 kLineMap.get(codeInfo.getCode()).getData())) {
                 unReadyCodes.add(codeInfo);
-                modifyFile(unReadyCodes.toArray(new CodeInfo[] {}));
+                unReadyKLineMap = modifyFile(unReadyCodes.toArray(new CodeInfo[] {}));
             }
         }
-
+        kLineMap.putAll(unReadyKLineMap);
         for (CodeInfo codeInfo : codeInfos) {
             if (kLineMap.get(codeInfo.getCode()) != null) {
                 readyMap.put(codeInfo, kLineMap.get(codeInfo.getCode()).getData());
@@ -80,9 +81,11 @@ public class DataUtil {
 
     }
 
-    private static void initKline(CodeInfo[] codeInfos) {
+    private static Map<String, KlineData> initKline(CodeInfo[] codeInfos) {
 
-        LOGGER.info("date:{},CUTOFF:{}",new SimpleDateFormat("yyyyMMdd").format(new Date()),CUTOFF);
+        Map<String, KlineData> kLineMap = Maps.newConcurrentMap();
+
+        LOGGER.info("date:{},CUTOFF:{}", new SimpleDateFormat("yyyyMMdd").format(new Date()), CUTOFF);
 
         if (!new SimpleDateFormat("yyyyMMdd").format(new Date()).equalsIgnoreCase(CUTOFF) || kLineMap.isEmpty()) {
 
@@ -108,9 +111,11 @@ public class DataUtil {
             });
             CUTOFF = new SimpleDateFormat("yyyyMMdd").format(new Date());
         }
+        return kLineMap;
     }
 
-    private static void modifyFile(CodeInfo[] unreadyCodes) {
+    private static Map<String, KlineData> modifyFile(CodeInfo[] unreadyCodes) {
+        Map<String, KlineData> kLineMap = Maps.newConcurrentMap();
         Map<CodeInfo, List<KLine>> listMap = DataUtil.loadKline();
         for (int i = 0; i < unreadyCodes.length; i++) {
             try {
@@ -129,6 +134,7 @@ public class DataUtil {
         listMap.forEach((codeInfo, kLines) -> {
             kLineMap.put(codeInfo.getCode(), KlineData.builder().codeInfo(codeInfo).data(kLines).build());
         });
+        return kLineMap;
     }
 
     public static String numFormat(String pattern, Double num) {
