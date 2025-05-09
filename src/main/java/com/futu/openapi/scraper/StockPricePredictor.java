@@ -1,6 +1,11 @@
 package com.futu.openapi.scraper;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -15,18 +20,18 @@ import java.util.Map;
 import com.futu.openapi.pb.QotCommon.KLine;
 import com.futu.openapi.pb.QotCommon.QotMarket;
 import com.futu.openapi.pb.QotGetCapitalFlow.CapitalFlowItem;
-import com.futu.openapi.trade.model.CapitalDistribution;
-import com.futu.openapi.trade.service.CapitalService;
 import com.futu.openapi.scraper.model.PredictionResult;
+import com.futu.openapi.trade.model.CapitalDistribution;
+import com.futu.openapi.trade.run.funs.EMA;
 import com.futu.openapi.trade.run.util.CodeInfo;
 import com.futu.openapi.trade.run.util.data.DataUtil;
-import com.futu.openapi.trade.run.funs.EMA;
+import com.futu.openapi.trade.service.CapitalService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import lombok.Builder;
 import lombok.Data;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,7 +48,7 @@ class StockPrediction {
 
 @Service
 public class StockPricePredictor {
-    private static final Logger logger = LoggerFactory.getLogger(StockPricePredictor.class);
+    private static final Logger logger = LogManager.getLogger(StockPricePredictor.class);
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     // 文件相关常量
