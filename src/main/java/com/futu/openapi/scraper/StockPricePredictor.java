@@ -1,6 +1,7 @@
 package com.futu.openapi.scraper;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -1043,8 +1044,14 @@ public class StockPricePredictor {
             String day = String.format("%02d", today.getDayOfMonth());
             Path filePath = getPredictionFilePath(year, month, day);
 
+            // 1. 创建字节流（FileInputStream）
+            FileInputStream fis = new FileInputStream(filePath.toFile());
+
+            // 2. 用 InputStreamReader 指定 UTF-8 编码
+            InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8);
+
             if (Files.exists(filePath)) {
-                try (BufferedReader reader = new BufferedReader(new FileReader(filePath.toFile()))) {
+                try (BufferedReader reader = new BufferedReader(isr)) {
                     StringBuilder jsonContent = new StringBuilder();
                     String line;
                     while ((line = reader.readLine()) != null) {
@@ -1110,7 +1117,9 @@ public class StockPricePredictor {
             }
             
             // 保存更新后的预测结果
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath.toFile()))) {
+            // 1. 创建文件输出流
+            FileOutputStream fos = new FileOutputStream(filePath.toFile());
+            try (OutputStreamWriter writer =  new OutputStreamWriter(fos, StandardCharsets.UTF_8)) {
                 String json = gson.toJson(existingPredictions);
                 writer.write(json);
             }
