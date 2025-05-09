@@ -117,7 +117,7 @@ public class DataUtil {
 
         Map<CodeInfo, List<KLine>> listMap = Maps.newConcurrentMap();
         for (int i = 0; i < codeInfos.length; i++) {
-            LOGGER.info("queryKLine code:{},market:{}",codeInfos[i].getCode(), codeInfos[i].getMarket());
+            LOGGER.info("queryKLine code:{}", codeInfos[i]);
             try {
                 List<KLine> kLineList = queryKLines(codeInfos[i].getCode(), codeInfos[i].getMarket());
                 //组装数据
