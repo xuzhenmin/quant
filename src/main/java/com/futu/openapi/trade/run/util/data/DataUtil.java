@@ -54,6 +54,8 @@ public class DataUtil {
      */
     public static Map<CodeInfo, List<KLine>> loadKLineData(CodeInfo... codeInfos) {
 
+        LOGGER.info("loadKLineData codes:{}", codeInfos);
+
         Map<String, KlineData> kLineMap = initKline(codeInfos);
 
         //已有数据
@@ -79,6 +81,60 @@ public class DataUtil {
         //System.out.println("unReadyCodes:" + JSON.toJSONString(unReadyCodes));
         return readyMap;
 
+    }
+
+    /**
+     * 读取K线数据
+     *
+     * @param codeInfos
+     * @return
+     */
+    public static Map<CodeInfo, List<KLine>> loadKLineDirect(CodeInfo... codeInfos) {
+
+        LOGGER.info("loadKLineDirect codes:{}", codeInfos);
+
+        Map<String, KlineData> kLineMap = queryKLine(codeInfos);
+
+        //已有数据
+        Map<CodeInfo, List<KLine>> readyMap = Maps.newConcurrentMap();
+
+        for (CodeInfo codeInfo : codeInfos) {
+            if (kLineMap.get(codeInfo.getCode()) != null) {
+                readyMap.put(codeInfo, kLineMap.get(codeInfo.getCode()).getData());
+            }
+        }
+        return readyMap;
+    }
+
+    /**
+     * 直查并写文件
+     *
+     * @param codeInfos
+     * @return
+     */
+    private static Map<String, KlineData> queryKLine(CodeInfo[] codeInfos) {
+        Map<String, KlineData> kLineMap = Maps.newConcurrentMap();
+
+        Map<CodeInfo, List<KLine>> listMap = Maps.newConcurrentMap();
+        for (int i = 0; i < codeInfos.length; i++) {
+            try {
+                List<KLine> kLineList = queryKLines(codeInfos[i].getCode(), codeInfos[i].getMarket());
+                //组装数据
+                listMap.put(codeInfos[i], kLineList);
+                //写入
+                DataUtil.writeKline(kLineList, codeInfos[i]);
+                //System.out.print("," + i);
+                if (i > 0 && i % 30 == 0) {
+                    System.out.println();
+                }
+                Thread.sleep(300);
+            } catch (Exception e) {
+                LOGGER.error("queryKLine error:{}", codeInfos, e);
+            }
+        }
+        listMap.forEach((codeInfo, kLines) -> kLineMap.put(codeInfo.getCode(), KlineData.builder().codeInfo(codeInfo)
+            .data(kLines).build()));
+        return kLineMap;
     }
 
     private static Map<String, KlineData> initKline(CodeInfo[] codeInfos) {
