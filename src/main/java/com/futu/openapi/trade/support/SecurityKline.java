@@ -14,12 +14,16 @@ import com.futu.openapi.pb.QotCommon.KLine;
 import com.futu.openapi.pb.QotRequestHistoryKL;
 import com.futu.openapi.trade.base.BaseDaemon;
 import com.google.common.collect.Lists;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * @author zhenmin
  * @version $Id: SecurityKline.java, v 0.1 2022-03-18 4:49 下午 xuxu Exp $$
  */
 public class SecurityKline extends BaseDaemon {
+
+    private static final Logger LOGGER = LogManager.getLogger(SecurityKline.class);
 
     private static SecurityKline securityKline;
 
@@ -56,16 +60,14 @@ public class SecurityKline extends BaseDaemon {
 
         List<KLine> kLines = Lists.newArrayList();
         if (rsp == null || rsp.getRetType() != Common.RetType.RetType_Succeed_VALUE) {
-            System.err.printf("queryKline err: retType=%d msg=%s\n", rsp == null ? null : rsp.getRetType(),
+            LOGGER.error("queryKline err: retType=%d msg=%s\n", rsp == null ? null : rsp.getRetType(),
                 rsp == null ? null : rsp.getRetMsg());
-            System.out.println("queryKline error : " + sec.getCode() + " , " + sec.getMarket());
+            LOGGER.error("queryKline error code:{},market:{},rsp:{} ", sec.getCode(), sec.getMarket(), rsp);
         } else {
             kLines = rsp.getS2C().getKlListList();
         }
         return kLines;
     }
-
-
 
     /**
      * query kline
@@ -74,7 +76,7 @@ public class SecurityKline extends BaseDaemon {
      * @return
      * @throws Exception
      */
-    public List<KLine> queryKline(QotCommon.Security sec, int offset,int days, int limit) throws Exception {
+    public List<KLine> queryKline(QotCommon.Security sec, int offset, int days, int limit) throws Exception {
 
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate now = LocalDate.now();
@@ -91,9 +93,9 @@ public class SecurityKline extends BaseDaemon {
 
         List<KLine> kLines = Lists.newArrayList();
         if (rsp == null || rsp.getRetType() != Common.RetType.RetType_Succeed_VALUE) {
-            System.err.printf("queryKline err: retType=%d msg=%s\n", rsp == null ? null : rsp.getRetType(),
+            LOGGER.error("queryKline err: retType=%d msg=%s\n", rsp == null ? null : rsp.getRetType(),
                 rsp == null ? null : rsp.getRetMsg());
-            System.out.println("queryKline error : " + sec.getCode() + " , " + sec.getMarket());
+            LOGGER.error("queryKline error code:{},market:{},rsp:{} ", sec.getCode(), sec.getMarket(), rsp);
         } else {
             kLines = rsp.getS2C().getKlListList();
         }
