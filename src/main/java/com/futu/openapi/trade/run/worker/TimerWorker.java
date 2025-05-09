@@ -15,15 +15,13 @@ import java.util.concurrent.TimeUnit;
 import com.futu.openapi.pb.QotCommon.KLine;
 import com.futu.openapi.pb.QotCommon.QotMarket;
 import com.futu.openapi.pb.QotCommon.Security;
-import com.futu.openapi.scraper.HKEXScraperController;
 import com.futu.openapi.trade.run.WatchGoodStocks;
 import com.futu.openapi.trade.run.analysis.CyclicalAnalysis;
 import com.futu.openapi.trade.run.util.DateUtil;
 import com.futu.openapi.trade.run.util.PropUtil;
-import com.futu.openapi.trade.run.util.sink.Sink2DingDing;
 import com.futu.openapi.trade.support.SecurityKline;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * @author zhenmin
@@ -31,7 +29,7 @@ import org.slf4j.LoggerFactory;
  */
 public class TimerWorker {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TimerWorker.class);
+    private static final Logger LOGGER = LogManager.getLogger(TimerWorker.class);
 
     private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
@@ -59,14 +57,14 @@ public class TimerWorker {
                     List<KLine> kLines = securityKline.queryKline(Security.newBuilder().setCode(code)
                         .setMarket(QotMarket.QotMarket_CNSZ_Security_VALUE).build(), 30, 1000);
                     if (DateUtil.isSameDay(kLines.get(kLines.size() - 1).getTime(), sdf.format(new Date()))) {
+
                         LOGGER.info("今天是交易日！！！！");
 
                         //任务执行
                         WatchGoodStocks.run();
                         CyclicalAnalysis.analysisPeak();
                         //Sink2Ding.sendMsg();
-
-			Sink2DingDing.sendMarkdownMessage("invest day!");
+                        //Sink2DingDing.sendMarkdownMessage("invest day!");
                     }
 
                 } catch (Exception e) {e.printStackTrace();}
