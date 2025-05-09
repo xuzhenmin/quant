@@ -45,7 +45,7 @@ public class WatchGoodStocks {
         CodeInfo[] codeInfos = queryCodeInfo();
         System.out.println("分组代码数量：" + codeInfos.length);
 
-        Map<CodeInfo, List<KLine>> lists = DataUtil.loadKLineData(codeInfos);
+        Map<CodeInfo, List<KLine>> lists = DataUtil.loadKLineDirect(codeInfos);
 
         //Map<CodeInfo, List<CapitalFlowItem>> capitalFlowMap = loadCapitalData(codeInfos);
 
