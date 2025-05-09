@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -32,6 +33,18 @@ public class StockPredictionController {
         return "stock/prediction";
     }
 
+    @GetMapping("/b/{num}")
+    public String redirect(@PathVariable String num) {
+        LOGGER.info("redirect num:{}:", num);
+        return "stock/prediction";
+    }
+
+    @GetMapping("/blog/{num}")
+    public String redirectB(@PathVariable String num) {
+        LOGGER.info("redirect blog num:{}:", num);
+        return "stock/prediction";
+    }
+
     @GetMapping("/watch")
     @ResponseBody
     public String watch() {
@@ -44,6 +57,7 @@ public class StockPredictionController {
         Sink2DingDing.sendMarkdownMessage("invest day!");
         return "watching";
     }
+
     @PostMapping("/stock/prediction/data")
     @ResponseBody
     public Map<String, Object> getPredictionData(@RequestParam String stockCode) {
