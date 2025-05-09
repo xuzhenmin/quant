@@ -27,8 +27,8 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.protobuf.util.JsonFormat;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.util.CollectionUtils;
 
 /**
@@ -37,7 +37,7 @@ import org.springframework.util.CollectionUtils;
  */
 public class DataUtil {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DataUtil.class);
+    private static final Logger LOGGER = LogManager.getLogger(DataUtil.class);
 
     private static final String PREFIX_SPE = "@";
     private static final String PREFIX_START = "$";
