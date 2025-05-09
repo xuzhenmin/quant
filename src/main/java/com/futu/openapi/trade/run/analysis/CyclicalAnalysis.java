@@ -148,7 +148,7 @@ public class CyclicalAnalysis {
 
         listMap.forEach((codeInfo, analyzes) -> {
 
-            Map<CodeInfo, List<KLine>> klineListMap = DataUtil.loadKLineData(codeInfo);
+            Map<CodeInfo, List<KLine>> klineListMap = DataUtil.loadKLineDirect(codeInfo);
 
             analyzes.forEach(analyze -> {
 
