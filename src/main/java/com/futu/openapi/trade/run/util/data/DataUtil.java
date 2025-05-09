@@ -91,7 +91,7 @@ public class DataUtil {
      */
     public static Map<CodeInfo, List<KLine>> loadKLineDirect(CodeInfo... codeInfos) {
 
-        LOGGER.info("loadKLineDirect codes:{}", codeInfos);
+        LOGGER.info("loadKLineDirect codes:{}", Lists.newArrayList(codeInfos));
 
         Map<String, KlineData> kLineMap = queryKLine(codeInfos);
 
