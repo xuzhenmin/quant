@@ -35,9 +35,9 @@ public class CapitalService {
 
         List<CapitalFlowItem> capitalFlowItems = capitalFlow.queryCapitalFlow(code, market);
 
-        for (CapitalFlowItem capitalFlowItem : capitalFlowItems) {
-            System.out.println(JsonFormat.printer().print(capitalFlowItem));
-        }
+        //for (CapitalFlowItem capitalFlowItem : capitalFlowItems) {
+        //    System.out.println(JsonFormat.printer().print(capitalFlowItem));
+        //}
         return capitalFlowItems;
 
     }
@@ -56,7 +56,7 @@ public class CapitalService {
 
         CapitalDistribution capitalDistribution = capitalFlow.queryCapitalDistribution(code, market);
 
-        System.out.println(JSON.toJSONString(capitalDistribution));
+        //System.out.println(JSON.toJSONString(capitalDistribution));
 
         return capitalDistribution;
     }
