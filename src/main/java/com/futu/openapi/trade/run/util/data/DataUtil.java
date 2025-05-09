@@ -117,6 +117,7 @@ public class DataUtil {
 
         Map<CodeInfo, List<KLine>> listMap = Maps.newConcurrentMap();
         for (int i = 0; i < codeInfos.length; i++) {
+            LOGGER.info("queryKLine code:{},market:{}",codeInfos[i].getCode(), codeInfos[i].getMarket());
             try {
                 List<KLine> kLineList = queryKLines(codeInfos[i].getCode(), codeInfos[i].getMarket());
                 //组装数据
@@ -127,7 +128,7 @@ public class DataUtil {
                 if (i > 0 && i % 30 == 0) {
                     System.out.println();
                 }
-                Thread.sleep(600);
+                Thread.sleep(900);
             } catch (Exception e) {
                 LOGGER.error("queryKLine error:{}", codeInfos, e);
             }
