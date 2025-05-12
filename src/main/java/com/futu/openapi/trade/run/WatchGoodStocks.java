@@ -65,7 +65,8 @@ public class WatchGoodStocks {
         List<String> sts = Lists.newArrayList();
         peakMap.forEach((codeInfo, peaks) -> {
             final StringBuffer st = new StringBuffer("symbol:");
-            st.append(codeInfo.getCode()).append(",name:").append(codeInfo.getName()).append(",Good:").append(
+            st.append(codeInfo.getCode()).append(",name:").append(codeInfo.getName()).append(",market:").append(
+                codeInfo.getMarket()).append(",Good:").append(
                 FindHigher.checkPeak(peaks, Integer.parseInt(PropUtil.getProp("peak")) - 1));
             peaks.forEach(sp -> st.append(",beginTime:").append(sp.getBegin()).append(",highTime:").append(sp.getEnd())
                 .append(",price:").append(sp.getPrice()));
@@ -74,8 +75,7 @@ public class WatchGoodStocks {
         IOUtil.write(Constants.getSelectStockFile(), sts, false);
     }
 
-    private static final List<String> GROUP_WHITELIST = Lists.newArrayList("量化", "沪深", "港股", "韭菜", "埋伏", "生肖", "提前埋伏",
-        "猥琐发育别浪");
+    private static final List<String> GROUP_WHITELIST = Lists.newArrayList("监控");
 
     private static final List<String> GROUP_BLACKLIST = Lists.newArrayList("加拿大", "澳洲", "港股期权", "期权", "美股期权", "债券",
         "全部",
