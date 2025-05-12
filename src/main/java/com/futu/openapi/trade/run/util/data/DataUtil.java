@@ -270,18 +270,19 @@ public class DataUtil {
                 }
                 String symbol = st[0].split(":")[1];
                 String name = st[1].split(":")[1];
+                int market = Integer.valueOf(st[2].split(":")[1]);
                 List<Peak<String, String, String, Double>> peakList = Lists.newArrayList();
 
                 Peak peak;
                 int index = 0;
-                for (int i = 3; i < st.length; i = i + 3) {
+                for (int i = 4; i < st.length; i = i + 3) {
                     peak = new Peak<String, String, String, Double>().put("" + index, st[i].split(":")[1],
                         st[i + 1].substring("highTime:".length()),
                         Double.parseDouble(st[i + 2].split(":")[1]));
                     peakList.add(peak);
                     index++;
                 }
-                peakMap.put(CodeInfo.builder().code(symbol).name(name).build(), peakList);
+                peakMap.put(CodeInfo.builder().code(symbol).market(market).name(name).build(), peakList);
 
             } catch (Exception e) {e.printStackTrace();}
         });
@@ -307,7 +308,7 @@ public class DataUtil {
         List<String> strings = Lists.newArrayList();
 
         listMap.forEach((codeInfo, analyzes) -> {
-            strings.add("code:" + codeInfo.getCode() + ",name:" + codeInfo.getName() + ",analyzes:" + JSON
+            strings.add("code:" + codeInfo.getCode() + ",name:" + codeInfo.getName()+ ",market:" + codeInfo.getMarket() + ",analyzes:" + JSON
                 .toJSONString(analyzes));
         });
         IOUtil.write(Constants.getAnalysisFile(), strings, false);
