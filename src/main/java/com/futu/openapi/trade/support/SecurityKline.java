@@ -60,9 +60,7 @@ public class SecurityKline extends BaseDaemon {
 
         List<KLine> kLines = Lists.newArrayList();
         if (rsp == null || rsp.getRetType() != Common.RetType.RetType_Succeed_VALUE) {
-            LOGGER.error("queryKline err: code:{},market:{},retType={} ,msg={}", sec.getCode(), sec.getMarket(),
-                rsp == null ? null : rsp.getRetType(),
-                rsp == null ? null : rsp.getRetMsg());
+            LOGGER.error("queryKline err: code:{},market:{},rsp={} ", sec.getCode(), sec.getMarket(), rsp);
         } else {
             kLines = rsp.getS2C().getKlListList();
         }
@@ -93,9 +91,7 @@ public class SecurityKline extends BaseDaemon {
 
         List<KLine> kLines = Lists.newArrayList();
         if (rsp == null || rsp.getRetType() != Common.RetType.RetType_Succeed_VALUE) {
-            LOGGER.error("queryKline err: code:{},market:{},retType={} ,msg={}", sec.getCode(), sec.getMarket(),
-                rsp == null ? null : rsp.getRetType(),
-                rsp == null ? null : rsp.getRetMsg());
+            LOGGER.error("queryKline err: code:{},market:{},rsp={} ", sec.getCode(), sec.getMarket(), rsp);
         } else {
             kLines = rsp.getS2C().getKlListList();
         }
