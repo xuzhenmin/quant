@@ -25,13 +25,13 @@ public class SecurityKline extends BaseDaemon {
 
     private static final Logger LOGGER = LogManager.getLogger(SecurityKline.class);
 
-    //private static SecurityKline securityKline;
+    private static SecurityKline securityKline;
 
     public static synchronized SecurityKline newInstance() {
-        //if (securityKline == null) {
-        SecurityKline securityKline = new SecurityKline();
-        securityKline.createCon();
-        //}
+        if (securityKline == null) {
+            securityKline = new SecurityKline();
+            securityKline.createCon();
+        }
         return securityKline;
     }
 
