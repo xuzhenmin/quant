@@ -35,6 +35,8 @@ import com.google.protobuf.ByteString;
 import com.google.protobuf.GeneratedMessageV3;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * @author zhenmin
@@ -44,6 +46,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BaseDaemon extends DaemonCon {
+
+    private static final Logger LOGGER = LogManager.getLogger(BaseDaemon.class);
 
     public void createCon() {
         try {
@@ -124,7 +128,10 @@ public class BaseDaemon extends DaemonCon {
 
         synchronized (syncEvent) {
             synchronized (qotLock) {
-                if (qotConnStatus != ConStatusEnum.READY) { return null; }
+                if (qotConnStatus != ConStatusEnum.READY) {
+                    LOGGER.warn("requestHistoryKLSync failed qotConnStatus:{}", qotConnStatus);
+                    return null;
+                }
                 QotRequestHistoryKL.C2S.Builder c2s = QotRequestHistoryKL.C2S.newBuilder()
                     .setSecurity(sec)
                     .setKlType(klType.getNumber())
@@ -143,7 +150,10 @@ public class BaseDaemon extends DaemonCon {
                 }
                 QotRequestHistoryKL.Request req = QotRequestHistoryKL.Request.newBuilder().setC2S(c2s).build();
                 int sn = qot.requestHistoryKL(req);
-                if (sn == 0) { return null; }
+                if (sn == 0) {
+                    LOGGER.warn("requestHistoryKLSync failed sn:{}", sn);
+                    return null;
+                }
                 reqInfo = new ConReqInfo(ProtoID.QOT_REQUESTHISTORYKL, syncEvent);
                 qotConReqInfoMap.put(sn, reqInfo);
             }
