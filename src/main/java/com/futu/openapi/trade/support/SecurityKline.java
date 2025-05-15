@@ -30,7 +30,7 @@ public class SecurityKline extends BaseDaemon {
     public static synchronized SecurityKline newInstance() {
         //if (securityKline == null) {
         SecurityKline securityKline = new SecurityKline();
-            securityKline.createCon();
+        securityKline.createCon();
         //}
         return securityKline;
     }
@@ -60,7 +60,8 @@ public class SecurityKline extends BaseDaemon {
 
         List<KLine> kLines = Lists.newArrayList();
         if (rsp == null || rsp.getRetType() != Common.RetType.RetType_Succeed_VALUE) {
-            LOGGER.error("queryKline err: code:{},market:{},rsp={} ", sec.getCode(), sec.getMarket(), rsp);
+            LOGGER.error("queryKline err: code:{},market:{},rsp={} ,msg:{}", sec.getCode(), sec.getMarket(), rsp,
+                rsp == null ? null : rsp.getRetMsg());
         } else {
             kLines = rsp.getS2C().getKlListList();
         }
