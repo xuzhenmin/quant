@@ -13,6 +13,7 @@ import com.futu.openapi.pb.QotCommon;
 import com.futu.openapi.pb.QotCommon.KLine;
 import com.futu.openapi.pb.QotRequestHistoryKL;
 import com.futu.openapi.trade.base.BaseDaemon;
+import com.futu.openapi.trade.base.ConStatusEnum;
 import com.google.common.collect.Lists;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -62,6 +63,11 @@ public class SecurityKline extends BaseDaemon {
         if (rsp == null || rsp.getRetType() != Common.RetType.RetType_Succeed_VALUE) {
             LOGGER.error("queryKline err: code:{},market:{},rsp={} ,msg:{}", sec.getCode(), sec.getMarket(), rsp,
                 rsp == null ? null : rsp.getRetMsg());
+            //尝试重新启动链接
+            if (rsp == null && securityKline.qotConnStatus != ConStatusEnum.READY) {
+                //重新创建链接
+                securityKline.createCon();
+            }
         } else {
             kLines = rsp.getS2C().getKlListList();
         }
