@@ -6,6 +6,8 @@ package com.futu.openapi.trade.base;
 
 import java.util.List;
 
+import com.alibaba.fastjson.JSON;
+
 import com.futu.openapi.FTAPI_Conn;
 import com.futu.openapi.ProtoID;
 import com.futu.openapi.pb.QotCommon;
@@ -53,6 +55,7 @@ public class BaseDaemon extends DaemonCon {
         try {
             //建立链接
             boolean ret = initConnectQotSync("127.0.0.1", (short)11111);
+            LOGGER.info("{} createCon {}.", getClass().getSimpleName(), JSON.toJSONString(ret));
             //System.out.println(JSON.toJSONString(ret));
         } catch (Exception e) {
             LOGGER.error("{} createCon error.", getClass().getSimpleName(), e);
