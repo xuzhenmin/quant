@@ -65,8 +65,11 @@ public class SecurityKline extends BaseDaemon {
                 rsp == null ? null : rsp.getRetMsg());
             //尝试重新启动链接
             if (rsp == null && securityKline.qotConnStatus != ConStatusEnum.READY) {
+                LOGGER.error("queryKline err reconnection !");
                 //重新创建链接
                 securityKline.createCon();
+                LOGGER.error("queryKline err reconnection end! status:{}", securityKline.qotConnStatus);
+
             }
         } else {
             kLines = rsp.getS2C().getKlListList();
