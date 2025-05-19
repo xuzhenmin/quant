@@ -55,7 +55,7 @@ public class BaseDaemon extends DaemonCon {
             boolean ret = initConnectQotSync("127.0.0.1", (short)11111);
             //System.out.println(JSON.toJSONString(ret));
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error("{} createCon error.", getClass().getSimpleName(), e);
         }
     }
 
