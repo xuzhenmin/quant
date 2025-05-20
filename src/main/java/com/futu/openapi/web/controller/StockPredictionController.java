@@ -45,6 +45,12 @@ public class StockPredictionController {
         return "stock/prediction";
     }
 
+    @GetMapping("/")
+    public String redirect() {
+        LOGGER.info("redirect !");
+        return "stock/prediction";
+    }
+
     @GetMapping("/watch")
     @ResponseBody
     public String watch() {
