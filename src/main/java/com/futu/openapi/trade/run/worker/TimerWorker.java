@@ -19,6 +19,7 @@ import com.futu.openapi.trade.run.WatchGoodStocks;
 import com.futu.openapi.trade.run.analysis.CyclicalAnalysis;
 import com.futu.openapi.trade.run.util.DateUtil;
 import com.futu.openapi.trade.run.util.PropUtil;
+import com.futu.openapi.trade.run.util.sink.Sink2DingDing;
 import com.futu.openapi.trade.support.SecurityKline;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -64,7 +65,7 @@ public class TimerWorker {
                         WatchGoodStocks.run();
                         CyclicalAnalysis.analysisPeak();
                         //Sink2Ding.sendMsg();
-                        //Sink2DingDing.sendMarkdownMessage("invest day!");
+                        Sink2DingDing.sendMarkdownMessage("invest day!");
                     }
 
                 } catch (Exception e) {e.printStackTrace();}
