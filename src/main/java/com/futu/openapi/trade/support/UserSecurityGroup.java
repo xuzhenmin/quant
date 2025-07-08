@@ -16,13 +16,18 @@ import com.futu.openapi.pb.QotGetUserSecurityGroup;
 import com.futu.openapi.pb.QotModifyUserSecurity;
 import com.futu.openapi.pb.QotModifyUserSecurity.ModifyUserSecurityOp;
 import com.futu.openapi.trade.base.BaseDaemon;
+import com.futu.openapi.trade.base.ConStatusEnum;
 import com.google.common.collect.Lists;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * @author zhenmin
  * @version $Id: UserSecurityGroup.java, v 0.1 2022-04-02 10:38 xuxu Exp $$
  */
 public class UserSecurityGroup extends BaseDaemon {
+
+    private static final Logger LOGGER = LogManager.getLogger(UserSecurityGroup.class);
 
     private static UserSecurityGroup userSecurityGroup;
 
@@ -31,10 +36,27 @@ public class UserSecurityGroup extends BaseDaemon {
             userSecurityGroup = new UserSecurityGroup();
             userSecurityGroup.createCon();
         }
+        checkCon();
         return userSecurityGroup;
     }
 
     private UserSecurityGroup() {}
+
+    private static void checkCon() {
+        try {
+            //尝试重新启动链接
+            if (userSecurityGroup.qotConnStatus != ConStatusEnum.READY) {
+                LOGGER.error("queryUserSecurity checkCon err reconnection !");
+                //重新创建链接
+                userSecurityGroup.createCon();
+                LOGGER.error("queryUserSecurity checkCon err reconnection end! status:{}",
+                    userSecurityGroup.qotConnStatus);
+            }
+        } catch (Exception e) {
+            LOGGER.error("check con ex", e);
+        }
+
+    }
 
     /**
      * @return
@@ -50,6 +72,13 @@ public class UserSecurityGroup extends BaseDaemon {
         QotGetUserSecurityGroup.Response rsp = getUserSecurityGroup(c2s);
         if (rsp == null || rsp.getRetType() != Common.RetType.RetType_Succeed_VALUE) {
             System.err.printf("queryUserSecurityGroup fail: %s\n", rsp == null ? null : rsp.getRetMsg());
+            //尝试重新启动链接
+            if (rsp == null && userSecurityGroup.qotConnStatus != ConStatusEnum.READY) {
+                LOGGER.error("queryUserSecurity err reconnection !");
+                //重新创建链接
+                userSecurityGroup.createCon();
+                LOGGER.error("queryUserSecurity err reconnection end! status:{}", userSecurityGroup.qotConnStatus);
+            }
             return groupNames;
         }
         for (QotGetUserSecurityGroup.GroupData groupData : rsp.getS2C().getGroupListList()) {
@@ -79,6 +108,13 @@ public class UserSecurityGroup extends BaseDaemon {
 
         if (rsp == null || rsp.getRetType() != Common.RetType.RetType_Succeed_VALUE) {
             System.err.printf("queryUserSecurity fail: %s\n", rsp == null ? null : rsp.getRetMsg());
+            //尝试重新启动链接
+            if (rsp == null && userSecurityGroup.qotConnStatus != ConStatusEnum.READY) {
+                LOGGER.error("queryUserSecurity err reconnection !");
+                //重新创建链接
+                userSecurityGroup.createCon();
+                LOGGER.error("queryUserSecurity err reconnection end! status:{}", userSecurityGroup.qotConnStatus);
+            }
             return securities;
         }
         for (SecurityStaticInfo staticInfo : rsp.getS2C().getStaticInfoListList()) {
